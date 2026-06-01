@@ -26,4 +26,4 @@ ENV DATABASE_PATH=/app/data/faithguide.db
 ENV CHROMA_PATH=/app/data/chromadb
 
 # Use production server
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT

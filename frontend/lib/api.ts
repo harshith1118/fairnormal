@@ -4,7 +4,9 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-interface FetchOptions extends RequestInit {}
+interface FetchOptions extends RequestInit {
+  timeout?: number;
+}
 
 /**
  * Fetch wrapper with error handling.
@@ -13,13 +15,19 @@ async function apiFetch<T>(
   endpoint: string,
   options: FetchOptions = {}
 ): Promise<T> {
+  const { timeout = 30000, ...fetchOptions } = options;
   const url = `${API_BASE_URL}/api${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
 
   try {
     const response = await fetch(url, {
-      ...options,
+      ...fetchOptions,
+      signal: controller.signal,
       cache: 'no-store', // Prevent browser/Next.js caching of API responses
     });
+    clearTimeout(id);
 
     if (!response.ok) {
       throw new Error(
@@ -29,7 +37,11 @@ async function apiFetch<T>(
 
     const data: T = await response.json();
     return data;
-  } catch (error) {
+  } catch (error: any) {
+    clearTimeout(id);
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timed out after ${timeout}ms`);
+    }
     if (error instanceof TypeError && error.message.includes("Failed to fetch")) {
       throw new Error(
         `Cannot connect to backend at ${API_BASE_URL}. Is the server running?`
@@ -142,6 +154,7 @@ export async function fetchEvaluations(): Promise<{
     timestamp: string;
   }>;
   running?: boolean;
+  progress?: number;
 }> {
   return apiFetch("/evaluate", { timeout: 120000 });
 }
