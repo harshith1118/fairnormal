@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
-    // This disables ESLint during the build process
+    // This stops Next.js from running ESLint during the build
     ignoreDuringBuilds: true,
   },
   images: {
