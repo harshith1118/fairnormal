@@ -1,7 +1,7 @@
 # 🕊️ FaithGuide AI
 ### *Agentic Theological Intelligence & Scripture-Grounded Synthesis*
 
-[![Live Demo](https://img.shields.io/badge/Live-Production_App-blue?style=for-the-badge&logo=googlecloud)](https://faithguide-frontend-692034349177.us-central1.run.app)
+[![Live Demo](https://img.shields.io/badge/Live-Production_App-blue?style=for-the-badge&logo=googlecloud)](https://fairnormal-7mcp-heqwao4ju-harshiths-projects-8448cf53.vercel.app/)
 [![API Docs](https://img.shields.io/badge/API-Swagger_UI-green?style=for-the-badge&logo=fastapi)](https://faithguide-backend-692034349177.us-central1.run.app/docs)
 
 FaithGuide AI is a sophisticated, agentic full-stack platform designed to provide accurate, contextually aware religious data. Unlike generic LLMs, FaithGuide AI employs a **multi-layered verification architecture** to eliminate hallucinations, enforce theological safety, and respect denominational boundaries.
